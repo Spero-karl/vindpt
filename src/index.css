@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-ivoire: #F4F1E9;
+    --vert-foret: #294637;
+    --vert-foret-dark: #1E3429;
+    --terracotta: #B87555;
+    --terracotta-hover: #A06447;
+    --blanc-casse: #FAF8F5;
+    --gris-charbon: #1F2421;
+    --gris-moyen: #5A625D;
+    --gris-discret: #7A847E;
+    --bordure-fine: #E2DDD3;
+  }
+
+  body {
+    background-color: var(--bg-ivoire);
+    color: var(--gris-charbon);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+}
+
+/* Lucidité et clarté des cartes comme à l'origine, légèrement assorties avec l'ambiance cave */
+.bg-\[\#FAF8F5\] {
+  background-color: rgba(250, 248, 245, 0.96) !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.bg-\[\#F4F1E9\] {
+  background-color: rgba(244, 241, 233, 0.94) !important;
+}
+
+/* Scrollbar discrète */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8D2C5;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B87555;
+}

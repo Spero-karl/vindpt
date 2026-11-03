@@ -1,0 +1,25 @@
+{
+  "rules": {
+    "presence": {
+      ".read": "auth != null",
+      "$uid": {
+        ".read": "auth != null",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+    "presence_sessions": {
+      ".read": "auth != null",
+      "$uid": {
+        ".read": "auth != null",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+    "presence_users": {
+      ".read": "auth != null",
+      "$uid": {
+        ".read": "auth != null",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    }
+  }
+}

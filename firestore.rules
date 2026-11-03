@@ -1,0 +1,82 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // GESTION BOISSONS - RÈGLES DE SÉCURITÉ CLOUD FIRESTORE
+    // Sécurité avec support de l'inscription sur invitation
+    // ===============================================================
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    // 1. Catalogue des Boissons (products) : accessible pour la gestion boutique
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // 2. Caisse & Ventes au comptant (sales)
+    match /sales/{saleId} {
+      allow read, write: if true;
+    }
+
+    // 3. Mouvements de stock (stock_movements)
+    match /stock_movements/{movId} {
+      allow read, write: if true;
+    }
+
+    // 4. Approvisionnements & Achats (purchases)
+    match /purchases/{purchaseId} {
+      allow read, write: if true;
+    }
+
+    // 5. Dépenses d'exploitation (expenses)
+    match /expenses/{expenseId} {
+      allow read, write: if true;
+    }
+
+    // 6. Mouvements de caisse (cash_movements)
+    match /cash_movements/{movId} {
+      allow read, write: if true;
+    }
+
+    // 7. Journal d'audit (audit_logs)
+    match /audit_logs/{logId} {
+      allow read, create: if true;
+      allow update, delete: if false;
+    }
+
+    // 8. Utilisateurs (users) : permet la création sur invitation et l'authentification
+    match /users/{userId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if isAdmin();
+    }
+
+    // 9. Administrateurs (admins)
+    match /admins/{userId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // 10. Invitations (invitations) : vérification, création et consommation
+    match /invitations/{invitationId} {
+      allow read, write: if true;
+    }
+
+    // 11. Test de connectivité (Health check)
+    match /_health_check/{docId} {
+      allow read, write: if true;
+    }
+
+    // 12. Présence en direct multi-appareils (presence)
+    match /presence/{userId} {
+      allow read, write: if true;
+    }
+  }
+}
